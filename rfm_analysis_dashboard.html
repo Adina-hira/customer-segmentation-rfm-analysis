@@ -1,0 +1,208 @@
+
+<h2 class="sr-only">RFM Analysis Dashboard showing customer segmentation across 795 customers with profit and behavioral metrics</h2>
+
+<div style="padding: 1.5rem 0 0;">
+
+<div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 8px;">
+  <div>
+    <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 4px;">RFM customer segmentation</p>
+    <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0;">Superstore dataset · 795 customers</p>
+  </div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <button onclick="sendPrompt('What marketing actions should I take for each RFM segment?')" style="font-size: 12px; padding: 6px 12px;">Suggest actions ↗</button>
+    <button onclick="sendPrompt('Which segment should I prioritize for retention efforts in my RFM analysis?')" style="font-size: 12px; padding: 6px 12px;">Prioritize segments ↗</button>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 1.5rem;">
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 6px;">Total customers</p>
+    <p style="font-size: 24px; font-weight: 500; margin: 0;">795</p>
+  </div>
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 6px;">Total profit</p>
+    <p style="font-size: 24px; font-weight: 500; margin: 0;">$572.8K</p>
+  </div>
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 6px;">Total orders</p>
+    <p style="font-size: 24px; font-weight: 500; margin: 0;">19,988</p>
+  </div>
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0 0 6px;">Segments</p>
+    <p style="font-size: 24px; font-weight: 500; margin: 0;">7</p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; margin-bottom: 16px;">
+
+  <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem;">
+    <p style="font-size: 13px; font-weight: 500; margin: 0 0 12px;">Customer distribution</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary);">
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#e24b4a;display:inline-block;"></span>Can't Lose Them</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#ef9f27;display:inline-block;"></span>At Risk</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#73726c;display:inline-block;"></span>Others</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#1d9e75;display:inline-block;"></span>Champions</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#378add;display:inline-block;"></span>Loyal</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#7f77dd;display:inline-block;"></span>Potential</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#b4b2a9;display:inline-block;"></span>Lost</span>
+    </div>
+    <div style="position: relative; height: 220px;">
+      <canvas id="segPie" role="img" aria-label="Donut chart of customer segments. Can't Lose Them 272, At Risk 173, Others 121, Champions 95, Loyal Customers 68, Potential Loyalist 50, Lost 16.">272 Can't Lose Them, 173 At Risk, 121 Others, 95 Champions, 68 Loyal Customers, 50 Potential Loyalist, 16 Lost.</canvas>
+    </div>
+  </div>
+
+  <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem;">
+    <p style="font-size: 13px; font-weight: 500; margin: 0 0 12px;">Profit by segment ($)</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary);">
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#ef9f27;display:inline-block;"></span>At Risk</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#e24b4a;display:inline-block;"></span>Can't Lose</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#73726c;display:inline-block;"></span>Others</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#378add;display:inline-block;"></span>Loyal</span>
+      <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#1d9e75;display:inline-block;"></span>Champions</span>
+    </div>
+    <div style="position: relative; height: 220px;">
+      <canvas id="profitBar" role="img" aria-label="Horizontal bar chart of profit by segment. At Risk leads with $357,594.">At Risk: $357,594 — Can't Lose Them: $118,446 — Others: $28,768 — Loyal: $24,767 — Champions: $20,287 — Potential: $15,289 — Lost: $7,643.</canvas>
+    </div>
+  </div>
+</div>
+
+<div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 16px;">
+  <p style="font-size: 13px; font-weight: 500; margin: 0 0 4px;">Average R, F, M scores by segment</p>
+  <p style="font-size: 11px; color: var(--color-text-secondary); margin: 0 0 12px;">Score 1–5. R = recency, F = frequency, M = monetary value</p>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary);">
+    <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#378add;display:inline-block;"></span>R score</span>
+    <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#1d9e75;display:inline-block;"></span>F score</span>
+    <span style="display:flex;align-items:center;gap:3px;"><span style="width:9px;height:9px;border-radius:2px;background:#ef9f27;display:inline-block;"></span>M score</span>
+  </div>
+  <div style="position: relative; height: 240px;">
+    <canvas id="rfmGrouped" role="img" aria-label="Grouped bar chart of R, F, M average scores for each customer segment. Champions score highest overall.">Champions R4.63 F4.0 M4.4, Loyal R3.0 F4.0 M4.4, Potential R4.48 F3.0 M3.0, At Risk R4.44 F1.49 M1.49, Can't Lose Them R1.47 F3.74 M4.09, Lost R1.0 F1.62 M1.62, Others R2.75 F2.1 M2.1</canvas>
+  </div>
+</div>
+
+<div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 16px;">
+  <p style="font-size: 13px; font-weight: 500; margin: 0 0 4px;">Segment health matrix</p>
+  <p style="font-size: 11px; color: var(--color-text-secondary); margin: 0 0 14px;">Priority = value delivered vs retention urgency</p>
+  <div style="overflow-x: auto;">
+    <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+      <thead>
+        <tr style="border-bottom: 0.5px solid var(--color-border-tertiary);">
+          <th style="text-align:left; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Segment</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Customers</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Total profit</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Avg orders</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Avg R</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Avg F</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Avg M</th>
+          <th style="text-align:center; padding: 8px 10px; font-weight:500; color: var(--color-text-secondary);">Action</th>
+        </tr>
+      </thead>
+      <tbody id="segTable"></tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const textColor = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)';
+const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+
+new Chart(document.getElementById('segPie'), {
+  type: 'doughnut',
+  data: {
+    labels: ["Can't Lose Them", 'At Risk', 'Others', 'Champions', 'Loyal Customers', 'Potential Loyalist', 'Lost'],
+    datasets: [{
+      data: [272, 173, 121, 95, 68, 50, 16],
+      backgroundColor: ['#e24b4a','#ef9f27','#73726c','#1d9e75','#378add','#7f77dd','#b4b2a9'],
+      borderWidth: 2,
+      borderColor: isDark ? '#1a1a1a' : '#ffffff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} customers` } }
+    }
+  }
+});
+
+new Chart(document.getElementById('profitBar'), {
+  type: 'bar',
+  data: {
+    labels: ['At Risk', "Can't Lose", 'Others', 'Loyal', 'Champions', 'Potential', 'Lost'],
+    datasets: [{
+      data: [357594, 118446, 28768, 24767, 20287, 15289, 7643],
+      backgroundColor: ['#ef9f27','#e24b4a','#73726c','#378add','#1d9e75','#7f77dd','#b4b2a9'],
+      borderRadius: 4, borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.x.toLocaleString()}` } } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { color: textColor, callback: v => '$' + (v/1000).toFixed(0) + 'K' } },
+      y: { grid: { display: false }, ticks: { color: textColor, font: { size: 11 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('rfmGrouped'), {
+  type: 'bar',
+  data: {
+    labels: ['Champions', 'Loyal', 'Potential', 'At Risk', "Can't Lose", 'Lost', 'Others'],
+    datasets: [
+      { label: 'R score', data: [4.63, 3.00, 4.48, 4.44, 1.47, 1.00, 2.75], backgroundColor: '#378add', borderRadius: 3 },
+      { label: 'F score', data: [4.00, 4.00, 3.00, 1.49, 3.74, 1.62, 2.10], backgroundColor: '#1d9e75', borderRadius: 3 },
+      { label: 'M score', data: [4.40, 4.40, 3.00, 1.49, 4.09, 1.62, 2.10], backgroundColor: '#ef9f27', borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: textColor, font: { size: 11 } } },
+      y: { min: 0, max: 5, grid: { color: gridColor }, ticks: { color: textColor, stepSize: 1 } }
+    }
+  }
+});
+
+const tableData = [
+  { seg: 'Champions', count: 95, profit: 20287, orders: 12.1, r: 4.63, f: 4.0, m: 4.4, action: 'Reward & upsell', badge: 'success' },
+  { seg: 'Loyal Customers', count: 68, profit: 24767, orders: 12.4, r: 3.0, f: 4.0, m: 4.4, action: 'Cross-sell offers', badge: 'success' },
+  { seg: 'Potential Loyalist', count: 50, profit: 15289, orders: 13.0, r: 4.48, f: 3.0, m: 3.0, action: 'Loyalty program', badge: 'info' },
+  { seg: 'At Risk', count: 173, profit: 357594, orders: 70.4, r: 4.44, f: 1.49, m: 1.49, action: 'Re-engage now', badge: 'warning' },
+  { seg: "Can't Lose Them", count: 272, profit: 118446, orders: 12.8, r: 1.47, f: 3.74, m: 4.09, action: 'Win-back campaign', badge: 'warning' },
+  { seg: 'Others', count: 121, profit: 28768, orders: 12.2, r: 2.75, f: 2.1, m: 2.1, action: 'Nurture & educate', badge: 'neutral' },
+  { seg: 'Lost', count: 16, profit: 7643, orders: 14.1, r: 1.0, f: 1.62, m: 1.62, action: 'Last-chance offer', badge: 'danger' }
+];
+
+const badgeStyle = {
+  success: 'background:#eaf3de;color:#3b6d11',
+  info: 'background:#e6f1fb;color:#185fa5',
+  warning: 'background:#faeeda;color:#854f0b',
+  danger: 'background:#fcebeb;color:#a32d2d',
+  neutral: 'background:var(--color-background-secondary);color:var(--color-text-secondary)'
+};
+
+const tbody = document.getElementById('segTable');
+tableData.forEach((d, i) => {
+  const tr = document.createElement('tr');
+  tr.style.cssText = `border-bottom: 0.5px solid var(--color-border-tertiary);`;
+  tr.innerHTML = `
+    <td style="padding:8px 10px;font-weight:500;">${d.seg}</td>
+    <td style="padding:8px 10px;text-align:center;">${d.count}</td>
+    <td style="padding:8px 10px;text-align:center;">$${d.profit.toLocaleString()}</td>
+    <td style="padding:8px 10px;text-align:center;">${d.orders}</td>
+    <td style="padding:8px 10px;text-align:center;">${d.r}</td>
+    <td style="padding:8px 10px;text-align:center;">${d.f}</td>
+    <td style="padding:8px 10px;text-align:center;">${d.m}</td>
+    <td style="padding:8px 10px;text-align:center;"><span style="font-size:11px;padding:3px 8px;border-radius:4px;${badgeStyle[d.badge]}">${d.action}</span></td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
